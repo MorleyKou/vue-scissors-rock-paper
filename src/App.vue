@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header>
+    <header id="hd">
        Result : Win - ({{winCount}}) 
        , Lose - ({{loseCount}}) 
        , Draw - ({{drawCount}}) 
