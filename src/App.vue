@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <header>
+       Result : Win - ({{winCount}}) 
+       , Lose - ({{loseCount}}) 
+       , Draw - ({{drawCount}}) 
+       <button @click="()=> reset()" >Reset</button>
+    </header>
     <div id="bot-placeholder" >
       <img :src="bot_image">
     </div>
@@ -28,15 +34,26 @@ export default {
     return {
       botChoice: 0,
       userChoice: 0,
+      winCount: 0,
+      loseCount: 0,
+      drawCount: 0,
     }
   },
   methods:{
+    reset() {
+      this.winCount=0;
+      this.loseCount=0;
+      this.drawCount=0;
+      this.botChoice=0;
+      this.userChoice=0;
+    },
     userPicked(userPicked) {
       let botPicked = Math.floor(Math.random()*3)+1;
 
       if (userPicked == botPicked) {
         this.botChoice = botPicked + 100;
         this.userChoice = userPicked + 100;
+        this.drawCount+=1;
       } else if (
         userPicked ==1 && botPicked ==3 ||
         userPicked ==2 && botPicked ==1 ||
@@ -44,12 +61,14 @@ export default {
         ) {
         this.botChoice = botPicked * -10;
         this.userChoice = userPicked * 10 ;
+        this.winCount+=1;
       } else if ( 
         userPicked == 1 && botPicked == 2 || 
         userPicked == 2 && botPicked == 3 || 
         userPicked == 3 && botPicked == 1 ) {
         this.botChoice = botPicked * 10;
         this.userChoice = userPicked * -10;
+        this.loseCount+=1;
       }
     }
   },
@@ -83,7 +102,16 @@ export default {
       userChoice['101'] = 'paper-draw.png';
 
       return `/images/${userChoice[this.userChoice]}`;
-    }
+    },
+    // winCount() {
+    //   return 0;
+    // },
+    // loseCount() {
+    //   return 0;
+    // },
+    // drawCount() {
+    //   return 0;
+    // }
   }
 }
 </script>
@@ -137,5 +165,11 @@ export default {
 }
 #btn-rock {
   background-image: url('/images/rock-btn.png');
+}
+
+header {
+  background-color: #000000;
+  padding: 10px 10px;
+  color: #FFFFFF;
 }
 </style>
